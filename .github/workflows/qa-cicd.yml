@@ -272,11 +272,13 @@ jobs:
           git add k8-manifests/qa/app-deployment.yaml
           git commit -m "ci(qa): update image tag to ${{ github.sha }}" || exit 0
           git push origin qa
-
-  deploy-to-qa-eks:
+deploy-to-qa-eks:
     name: Deploy to QA EKS
     runs-on: ubuntu-latest
     needs: update-qa-manifest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
