@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nodejs-app
-        image: 199s/devsecops-3tier-app:804118087ae88b2628188fe0db2770c25b06c1ac
+        image: 199s/devsecops-3tier-app:ad459301f1911880755ddf866bb961e6c143125b
         ports:
         - containerPort: 5000
         env:
