@@ -1,0 +1,18 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: devsecops-cluster
+  region: eu-west-3
+
+managedNodeGroups:
+  - name: standard-workers-v2
+    instanceType: t3.micro
+    desiredCapacity: 3
+    minSize: 2
+    maxSize: 5
+    maxPodsPerNode: 30
+    volumeSize: 20
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        albIngress: true

@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: nodejs-app
   namespace: qa
+  labels:
+    app: nodejs-app
 spec:
   replicas: 1
   selector:
@@ -13,8 +15,6 @@ spec:
       labels:
         app: nodejs-app
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
       - name: nodejs-app
         image: 199s/devsecops-3tier-app:6edc338fe52a0328806eced62250cc1af4b70e65
@@ -22,7 +22,7 @@ spec:
         - containerPort: 5000
         env:
         - name: DB_HOST
-          value: mysql
+          value: "mysql"
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
