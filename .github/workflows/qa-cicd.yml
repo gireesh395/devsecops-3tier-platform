@@ -134,7 +134,7 @@ jobs:
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.6
         with:
-          version: latest
+          version: v0.58.2
           cache: true
 
       - name: Verify Trivy installation
@@ -184,7 +184,7 @@ jobs:
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.6
         with:
-          version: latest
+          version: v0.58.2
           cache: true
 
       - name: Run Trivy FS scan on server (JSON)
