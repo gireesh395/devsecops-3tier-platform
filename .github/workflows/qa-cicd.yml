@@ -226,20 +226,12 @@ jobs:
         with:
           ref: qa
 
-      - name: Inspect GitHub OIDC Token Claims
-        run: |
-          TOKEN=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
-          echo "=== TOKEN PAYLOAD ==="
-          echo "$TOKEN" | cut -d. -f2 | base64 -d 2>/dev/null | jq .
-
       - name: Configure AWS Credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::228145979695:role/GitHubActions-EKS-Role
           aws-region: eu-west-3
           audience: sts.amazonaws.com
-        
 
       - name: Update Kubeconfig
         run: |
