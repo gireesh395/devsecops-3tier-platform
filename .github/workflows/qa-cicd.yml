@@ -238,6 +238,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::228145979695:role/GitHubActions-EKS-Role
           aws-region: eu-west-3
+          audience: sts.amazonaws.com
         
 
       - name: Update Kubeconfig
