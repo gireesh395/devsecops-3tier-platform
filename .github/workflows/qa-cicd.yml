@@ -187,14 +187,16 @@ jobs:
       - name: Build and push Client Image
         uses: docker/build-push-action@v5
         with:
-          context: ./client
+          context: .
+          file:./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/3tier-client:qa-${{ github.sha }}
 
       - name: Build and push Server Image
         uses: docker/build-push-action@v5
         with:
-          context: ./server
+          context: .
+          file:./Dockerfile 
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/3tier-server:qa-${{ github.sha }}
 
