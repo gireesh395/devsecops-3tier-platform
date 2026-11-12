@@ -55,6 +55,9 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
           sudo apt-get update -y
           sudo apt-get install -y trivy
+         else
+         echo "Trivy already installed — skipping install"
+         fi
 
       - name: Verify Trivy installation
         run: trivy --version
@@ -107,6 +110,9 @@ jobs:
             echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
             sudo apt-get update -y
           sudo apt-get install -y trivy
+          else
+          echo "Trivy already installed — skipping install"
+          fi
 
       - name: Verify Trivy installation
         run: trivy --version
