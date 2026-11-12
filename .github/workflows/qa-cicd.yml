@@ -35,7 +35,7 @@ jobs:
       - name: Run Checkov on Terraform, K8s & Dockerfile
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: .
+          directory: .checkov.yaml
           soft_fail: false
 
   client-trivy-fs:
@@ -159,7 +159,7 @@ jobs:
   docker-build-push:
     name: Docker Build & Push to ECR
     runs-on: self-hosted
-    needs: [client-trivy-fs, server-trivy-fs, sonarqube-scan]
+    needs: [client-trivy-fs, server-trivy-fs, sonarqube-scan, checkov-scan]
     permissions:
       id-token: write
       contents: read
