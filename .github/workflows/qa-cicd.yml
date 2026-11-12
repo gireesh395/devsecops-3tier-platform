@@ -13,7 +13,7 @@ permissions:
 jobs:
   gitleaks-scan:
     name: Gitleaks Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
 
   checkov-terraform-scan:
     name: Checkov Terraform Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
 
   checkov-k8s-scan:
     name: Checkov Kubernetes Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -54,7 +54,7 @@ jobs:
 
   checkov-dockerfile-scan:
     name: Checkov Dockerfile Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
 
   client-trivy-fs:
     name: Client Trivy FS Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: gitleaks-scan
     steps:
       - name: Checkout source code
@@ -118,7 +118,7 @@ jobs:
 
   server-trivy-fs:
     name: Server Trivy FS Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: gitleaks-scan
     steps:
       - name: Checkout source code
@@ -169,7 +169,7 @@ jobs:
 
   sonarqube-scan:
     name: SonarQube Code Quality Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: gitleaks-scan
     steps:
       - name: Checkout source code
@@ -185,7 +185,7 @@ jobs:
 
   docker-build-push:
     name: Docker Build & Push to ECR
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [client-trivy-fs, server-trivy-fs, sonarqube-scan]
     permissions:
       id-token: write
@@ -218,7 +218,7 @@ jobs:
 
   deploy-qa-eks:
     name: Deploy to QA EKS
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: docker-build-push
     permissions:
       id-token: write
