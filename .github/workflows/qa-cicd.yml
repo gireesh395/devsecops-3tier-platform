@@ -25,45 +25,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  checkov-terraform-scan:
-    name: Checkov Terraform Scan
+  checkov-scan:
+    name: Checkov IaC & Container Scan
     runs-on: self-hosted
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Run Checkov on Terraform
+      - name: Run Checkov on Terraform, K8s & Dockerfile
         uses: bridgecrewio/checkov-action@master
         with:
-          framework: terraform
-          soft_fail: true
-
-  checkov-k8s-scan:
-    name: Checkov Kubernetes Scan
-    runs-on: self-hosted
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
-
-      - name: Run Checkov on K8s manifests
-        uses: bridgecrewio/checkov-action@master
-        with:
-          framework: kubernetes
-          directory: k8-manifests/qa
-          soft_fail: true
-
-  checkov-dockerfile-scan:
-    name: Checkov Dockerfile Scan
-    runs-on: self-hosted
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
-
-      - name: Run Checkov on Dockerfiles
-        uses: bridgecrewio/checkov-action@master
-        with:
-          framework: dockerfile
-          soft_fail: true
+          directory: .
+          soft_fail: false
 
   client-trivy-fs:
     name: Client Trivy FS Scan
