@@ -1,4 +1,5 @@
 # Cloud-Native 3-Tier DevSecOps Platform on AWS EKS
+> 📖 **[Read the Full Engineering & Troubleshooting Case Study (`docs/ENGINEERING_REPORT.md`)](docs/ENGINEERING_REPORT.md)** — A deep dive into the architecture, FinOps sizing (`t3.micro` + OIDC), and 6 real CI/CD breakthroughs.
 
 A production-oriented, automated DevSecOps pipeline and Kubernetes deployment architecture for a 3-tier web application (**React/HTML Frontend**, **Node.js Backend**, **MySQL Database**) hosted on **Amazon EKS** (`eu-west-3`).
 
