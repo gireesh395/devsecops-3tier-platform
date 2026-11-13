@@ -58,8 +58,33 @@ Developer Push / PR (qa / main)
 | **SCA & Image Scanning** | **Trivy** | Client/Server dependencies & built Docker images | Identifies HIGH and CRITICAL CVEs with JSON & table reports |
 | **Static Analysis (SAST)** | **SonarQube** | Application source code (`client/` & `server/`) | Detects code smells, reliability bugs, and security hotspots |
 
----
 
+## Architecture & DevSecOps Pipeline
+
+```mermaid
+flowchart TB
+    Dev[Developer Push<br/>qa / main] --> GH[GitHub Actions<br/>Self-Hosted WSL2 Runner]
+
+    subgraph Security["Shift-Left Security Gates"]
+        direction LR
+        GL[Gitleaks<br/>Secrets]
+        CK[Checkov<br/>IaC & K8s]
+        TR[Trivy<br/>FS & Deps]
+        SQ[SonarQube<br/>Code SAST]
+    end
+
+    GH --> Security
+    Security -->|All Gates Pass| Build[Docker Build &<br/>Immutable Commit SHA Tagging]
+    Build --> ECR[(Push to Amazon ECR<br/>GitHub OIDC Auth)]
+    ECR --> EKS
+
+    subgraph EKS["Amazon EKS Cluster (eu-west-3)"]
+        direction TB
+        Traffic[AWS ALB Ingress ➔ Frontend / Node.js API Pods ➔ MySQL Pod]
+        Mon[Prometheus & Grafana<br/>Cluster Metrics]
+        Traffic --- Mon
+    end
+```
 ## Repository Structure
 
 ```text
