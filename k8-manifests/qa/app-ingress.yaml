@@ -10,12 +10,12 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nodejs-service
-            port:
-              number: 5000
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nodejs-service    # <-- Must match metadata.name in app-svc.yaml
+                port:
+                  number: 5000        # <-- Must match spec.ports[].port in app-svc.yaml

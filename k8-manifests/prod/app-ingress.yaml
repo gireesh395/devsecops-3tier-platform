@@ -6,19 +6,16 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:551322107788:certificate/8f6cd000-86e2-409e-9986-f5cbd335d5f8
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
 spec:
   ingressClassName: alb
   rules:
-    - host: adityajaiswal.com
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: nodejs-service
+                name: nodejs-service    # <-- Must match metadata.name in app-svc.yaml
                 port:
-                  number: 5000
+                  number: 5000        # <-- Must match spec.ports[].port in app-svc.yaml

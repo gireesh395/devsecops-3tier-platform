@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: nodejs-app
   namespace: qa
-  labels:
-    app: nodejs-app
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: nodejs-app
@@ -16,30 +16,25 @@ spec:
         app: nodejs-app
     spec:
       containers:
-      - name: nodejs-app
-        image: 199s/devsecops-3tier-app:1e0774035d4c30ef37fdb0f56f09a9ae0841ea59
-        ports:
-        - containerPort: 5000
-        env:
-        - name: DB_HOST
-          value: "mysql"
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_DATABASE
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_USER
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: MYSQL_PASSWORD
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: DATABASE_URL
+        - name: nodejs-app
+          image: 199s/devsecops-3tier-app:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOST
+              value: "mysql"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE

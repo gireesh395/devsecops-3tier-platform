@@ -16,17 +16,36 @@ spec:
       containers:
         - name: mysql
           image: mysql:8.0
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: "adminpassword123"
-            - name: MYSQL_DATABASE
-              value: "appdb"
-            - name: MYSQL_USER
-              value: "admin"
-            - name: MYSQL_PASSWORD
-              value: "adminpassword123"
           ports:
             - containerPort: 3306
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
 ---
 apiVersion: v1
 kind: Service

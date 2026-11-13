@@ -4,7 +4,7 @@ metadata:
   name: nodejs-service
   namespace: qa
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: nodejs-app
   ports:
