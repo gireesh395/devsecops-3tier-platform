@@ -67,14 +67,15 @@ devsecops-3tier-platform/
 ├── .github/workflows/
 │   ├── qa-cicd.yml              # Shift-left security DAG, Docker build/scan, and QA EKS deploy
 │   └── prod-cd.yaml             # Production release pipeline triggered on merge to main
-├── client/                      # Frontend web application + Dockerfile
-├── server/                      # Node.js backend API + Dockerfile
+├── client/                      # Frontend web application
+├── server/                      # Node.js backend API
+├── infra/
+│   └── eks-cluster.yaml         # Unified eksctl EKS cluster & nodegroup configuration
 ├── k8-manifests/
 │   ├── qa/                      # QA namespace deployments, services, secrets & ALB ingress
 │   └── prod/                    # Production namespace Kubernetes manifests
-├── cluster-config.yaml          # Standard eksctl EKS cluster specification
-├── free-tier-cluster.yaml       # Cost-optimized t3.small EKS cluster configuration
-├── checkov.yaml                 # Custom Checkov policy rules
+├── Dockerfile                   # Multi-stage container build for client & server
+├── .checkov.yaml                # Custom Checkov IaC & container policy rules
 └── sonar-project.properties     # SonarQube scanner configuration
 ```
 
@@ -94,7 +95,7 @@ aws ecr create-repository --repository-name devsecops-server --region eu-west-3
 
 ### 3. Provision the Amazon EKS Cluster
 ```bash
-eksctl create cluster -f free-tier-cluster.yaml
+eksctl create cluster -f infra/eks-cluster.yaml
 aws eks update-kubeconfig --name devsecops-cluster --region eu-west-3
 ```
 
