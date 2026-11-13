@@ -4,7 +4,9 @@ metadata:
   name: nodejs-app
   namespace: prod
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: nodejs-app
