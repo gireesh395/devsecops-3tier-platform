@@ -11,11 +11,10 @@ iam:
 
 addons:
   - name: vpc-cni
-    version: latest
+    configurationValues: '{"env":{"ENABLE_PREFIX_DELEGATION":"true","WARM_PREFIX_TARGET":"1"}}'
+    resolveConflicts: overwrite
   - name: kube-proxy
-    version: latest
   - name: coredns
-    version: latest
     configurationValues: |-
       replicaCount: 1
 
@@ -23,7 +22,11 @@ managedNodeGroups:
   - name: standard-workers
     instanceType: t3.micro
     desiredCapacity: 3
-    minSize: 1
-    maxSize: 3
+    minSize: 2
+    maxSize: 5
+    maxPodsPerNode: 30
     volumeSize: 20
-    privateNetworking: false
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        albIngress: true
